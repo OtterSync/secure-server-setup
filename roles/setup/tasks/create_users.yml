@@ -19,7 +19,7 @@
 
 - name: Create group "crypto"
   group:
-    name: cryto
+    name: "crypto"
     state: present
 
 - name: Create administrative user-1
