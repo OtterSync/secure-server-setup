@@ -2,7 +2,5 @@
 - name: create alias file
   template:
     src: bash_aliases.j2
-    dest: '/home/{{ deployment_user }}/.bash_aliases'
-    owner: '{{deployment_user}}'
-    group: '{{deployment_user}}'
+    dest: '/etc/profile.d/bash_aliases'
     mode: '0644'

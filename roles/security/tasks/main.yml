@@ -23,7 +23,7 @@
   changed_when: false
 
 - name: open alternative ssh port
-  command: 'ufw allow {{ ssh_port }}/tcp'
+  command: 'ufw allow {{ new_ssh_port }}/tcp'
 
 - name: close standard ssh port
   command: ufw deny 22/tcp
@@ -32,7 +32,7 @@
   lineinfile:
     dest: '/etc/ssh/sshd_config'
     regex: '^Port 22'
-    line: 'Port {{ ssh_port }}'
+    line: 'Port {{ new_ssh_port }}'
     state: present
     create: true
 

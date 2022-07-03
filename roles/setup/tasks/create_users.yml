@@ -17,20 +17,50 @@
     dest: /etc/sudoers.d/ansible
     mode: '0600'
 
-- name: Create administrator user
+- name: Create administrative user-1
   user:
-    name: '{{ deployment_user }}'
-    comment: 'admin user'
+    name: '{{ admin_user1 }}'
+    comment: 'admin user-1'
     shell: /bin/bash
+    groups: 'crypto'
+    password: '{{ admin_user1_pass }}'
 
-- name: Add administrator authorized key
+- name: Add administrative user-1 authorized key
   authorized_key:
-    user: '{{ deployment_user }}'
-    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    user: '{{ admin_user1 }}'
+    key: "{{ lookup('file', '{{ admin_user1_key }}') }}"
     exclusive: yes
 
-- name: Allow sudo for administrator
+- name: Allow sudo for administrative user-1
   copy:
-    content: '{{ deployment_user }} ALL=(ALL) NOPASSWD: ALL'
-    dest: '/etc/sudoers.d/{{ deployment_user }}'
+    content: '{{ admin_user1 }} ALL=(ALL) NOPASSWD: ALL'
+    dest: '/etc/sudoers.d/{{ admin_user1 }}'
     mode: '0600'
+
+- name: Create administrative user-2
+  user:
+    name: '{{ admin_user2 }}'
+    comment: 'admin user-2'
+    shell: /bin/bash
+    groups: 'crypto'
+    password: '{{ admin_user2_pass }}'
+    
+- name: Add administrative user-2 authorized key
+  authorized_key:
+    user: '{{ admin_user2 }}'
+    key: "{{ lookup('file', '{{ admin_user2_key }}') }}"
+    exclusive: yes
+
+- name: Allow sudo for administrative user-2
+  copy:
+    content: '{{ admin_user2 }} ALL=(ALL) NOPASSWD: ALL'
+    dest: '/etc/sudoers.d/{{ admin_user2 }}'
+    mode: '0600'
+
+- name: Create chain binary user (non-priv)
+  user:
+    name: '{{ binary_user }}'
+    comment: 'binary user'
+    shell: /bin/bash
+    groups: 'crypto'
+    password: '{{ binary_user_pass }}'
