@@ -17,6 +17,11 @@
     dest: /etc/sudoers.d/ansible
     mode: '0600'
 
+- name: Create group "crypto"
+  group:
+    name: cryto
+    state: present
+
 - name: Create administrative user-1
   user:
     name: '{{ admin_user1 }}'
